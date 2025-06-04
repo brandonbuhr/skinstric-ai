@@ -15,7 +15,7 @@ export default function Home() {
         </div>
 
         <div className="absolute right-[2px] top-1/2 -translate-y-1/2">
-          <ButtonWithIcon text="TAKE TEST" direction="right" />
+          <ButtonWithIcon text="TAKE TEST" direction="right" href="/testing" />
         </div>
 
         <div className="flex flex-col items-center justify-center h-[calc(100vh-72px)]">

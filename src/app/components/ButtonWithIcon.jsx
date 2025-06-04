@@ -1,13 +1,13 @@
+import Link from "next/link";
+
 export default function ButtonWithIcon({
   text = "button",
   onClick,
   direction = "left",
+  href,
 }) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex items-center gap-4 w-[150px] h-[44px] hover:cursor-pointer"
-    >
+  const buttonContent = (
+    <>
       {direction === "left" && (
         <div className="relative w-[44px] h-[44px] flex-shrink-0">
           <div className="absolute inset-0 border border-[#1A1B1C] rotate-45"></div>
@@ -39,6 +39,26 @@ export default function ButtonWithIcon({
           </div>
         </div>
       )}
+    </>
+  );
+
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className="flex items-center gap-4 w-[150px] h-[44px] hover:cursor-pointer"
+      >
+        {buttonContent}
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      className="flex items-center gap-4 w-[150px] h-[44px] hover:cursor-pointer"
+    >
+      {buttonContent}
     </button>
   );
 }

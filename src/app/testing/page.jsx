@@ -1,0 +1,171 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import ButtonWithIcon from "../components/ButtonWithIcon";
+import Navbar from "../components/Navbar";
+
+export default function Testing() {
+  const router = useRouter();
+  const [currentStep, setCurrentStep] = useState("name");
+  const [formData, setFormData] = useState({
+    name: "",
+    location: "",
+  });
+  const [currentValue, setCurrentValue] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const validateField = (field, value) => {
+    const hasNumbers = /\d/.test(value);
+
+    if (!value.trim()) {
+      return `${field} is required`;
+    }
+    if (hasNumbers) {
+      return `${field} should not contain numbers`;
+    }
+    if (value.trim().length < 2) {
+      return `${field} should be at least 2 characters`;
+    }
+    return "";
+  };
+
+  const handleKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      if (currentStep === "name") {
+        const nameError = validateField("Name", currentValue);
+        if (nameError) {
+          setError(nameError);
+          return;
+        }
+
+        setFormData((prev) => ({ ...prev, name: currentValue }));
+        setCurrentValue("");
+        setError("");
+        setCurrentStep("location");
+      } else if (currentStep === "location") {
+        const locationError = validateField("Location", currentValue);
+        if (locationError) {
+          setError(locationError);
+          return;
+        }
+
+        const finalData = {
+          ...formData,
+          location: currentValue,
+        };
+
+        localStorage.setItem("userData", JSON.stringify(finalData));
+
+        setIsLoading(true);
+        try {
+          const response = await fetch(
+            "https://us-central1-api-skinstric-ai.cloudfunctions.net/skinstricPhaseOne",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(finalData),
+            }
+          );
+
+          const data = await response.json();
+          console.log("API Response:", data);
+
+          if (data.SUCCESS || response.ok) {
+            setCurrentStep("complete");
+          } else {
+            setError("Something went wrong. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error submitting form:", error);
+          setError("An error occurred. Please try again.");
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    }
+  };
+
+  const handleInputChange = (value) => {
+    setCurrentValue(value);
+    if (error) {
+      setError("");
+    }
+  };
+
+  const getPlaceholder = () => {
+    if (currentStep === "name") return "Enter your name";
+    if (currentStep === "location") return "Enter your location";
+    return "";
+  };
+
+  const handleProceed = () => {
+    router.push("/result");
+  };
+
+  return (
+    <>
+      <Navbar />
+      <p className="ml-8 font-bold">TO START ANALYSIS</p>
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-72px)] gap-8">
+        <div className="relative flex flex-col items-center gap-6 w-full max-w-md">
+          <div className="absolute w-[602px] h-[602px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-dashed border-2 rotate-45 border-[#A0A4AB]"></div>
+          {currentStep !== "complete" ? (
+            <>
+              <p className="text-sm text-gray-600 relative z-10">
+                {currentStep === "name"
+                  ? "What's your name?"
+                  : "Where are you located?"}
+              </p>
+              <input
+                type="text"
+                placeholder={getPlaceholder()}
+                value={currentValue}
+                onChange={(e) => handleInputChange(e.target.value)}
+                onKeyDown={handleKeyDown}
+                disabled={isLoading}
+                className={`outline-none text-center text-4xl bg-transparent border-b-2 pb-2 w-full relative z-10 ${
+                  error ? "border-red-500" : "border-gray-300"
+                } focus:border-black transition-colors`}
+                autoFocus
+              />
+              {error && (
+                <p className="text-red-500 text-sm mt-1 relative z-10">
+                  {error}
+                </p>
+              )}
+              {isLoading && (
+                <p className="text-gray-600 text-sm mt-2 relative z-10">
+                  Processing...
+                </p>
+              )}
+            </>
+          ) : (
+            <div className="flex flex-col items-center gap-6 relative z-10">
+              <h2 className="text-4xl text-center">Thank you!</h2>
+              <p className="text-xl text-gray-600">Proceed to the next step</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="absolute left-[32px] bottom-[32px]">
+        <ButtonWithIcon text="BACK" direction="left" href="/" />
+      </div>
+
+      {currentStep === "complete" && (
+        <div className="absolute right-[32px] bottom-[32px]">
+          <ButtonWithIcon
+            text="PROCEED"
+            direction="right"
+            onClick={handleProceed}
+          />
+        </div>
+      )}
+    </>
+  );
+}
