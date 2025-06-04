@@ -2,7 +2,7 @@ export default function Navbar() {
   return (
     <div>
       <nav>
-        <ul className="flex items-center p-4">
+        <ul className="flex items-center p-4 mr-4 ml-4">
           <li>
             <a href="/" className="font-bold">
               SKINSTRIC
