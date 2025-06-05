@@ -111,9 +111,9 @@ export default function Testing() {
     <>
       <Navbar />
       <p className="ml-8 font-bold">TO START ANALYSIS</p>
-      <div className="flex flex-col items-center justify-center h-[calc(100vh-72px)] gap-8">
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-120px)] gap-8">
         <div className="relative flex flex-col items-center gap-6 w-full max-w-md">
-          <div className="absolute w-[602px] h-[602px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-dashed border-2 rotate-45 border-[#A0A4AB]"></div>
+          <div className="absolute w-[500px] h-[500px] left-1/2 top-3/4 -translate-x-1/2 -translate-y-1/2 border-dashed border-2 rotate-45 border-[#A0A4AB]"></div>
           {currentStep !== "complete" ? (
             <>
               <p className="text-sm text-gray-600 relative z-10">

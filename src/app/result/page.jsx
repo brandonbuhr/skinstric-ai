@@ -1,15 +1,35 @@
 "use client";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import ButtonWithIcon from "../components/ButtonWithIcon";
 import Navbar from "../components/Navbar";
 
 export default function Result() {
+  const router = useRouter();
+
   const handleFaceScan = () => {
-    console.log("Face scan clicked");
+    router.push("/camera");
   };
 
   const handleGalleryAccess = () => {
-    console.log("Gallery access clicked");
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          const base64String = reader.result.split(",")[1];
+
+          sessionStorage.setItem("capturedImage", base64String);
+
+          router.push("/processing");
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    input.click();
   };
 
   return (
