@@ -10,7 +10,7 @@ export default function ButtonWithIcon({
     <>
       {direction === "left" && (
         <div className="relative w-[44px] h-[44px] flex-shrink-0">
-          <div className="absolute inset-0 border border-[#1A1B1C] rotate-45"></div>
+          <div className="absolute inset-0 border border-[#1A1B1C] rotate-45 transition-transform duration-300 group-hover:scale-[1.1]"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <svg
               viewBox="0 0 10 10"
@@ -28,7 +28,7 @@ export default function ButtonWithIcon({
 
       {direction === "right" && (
         <div className="relative w-[44px] h-[44px] flex-shrink-0">
-          <div className="absolute inset-0 border border-[#1A1B1C] rotate-45"></div>
+          <div className="absolute inset-0 border border-[#1A1B1C] rotate-45 transition-transform duration-300 group-hover:scale-[1.1]"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <svg
               viewBox="0 0 10 10"
@@ -46,7 +46,7 @@ export default function ButtonWithIcon({
     return (
       <Link
         href={href}
-        className="flex items-center gap-4 w-[150px] h-[44px] hover:cursor-pointer"
+        className="flex items-center gap-4 w-[150px] h-[44px] hover:cursor-pointer group"
       >
         {buttonContent}
       </Link>
@@ -56,7 +56,7 @@ export default function ButtonWithIcon({
   return (
     <button
       onClick={onClick}
-      className="flex items-center gap-4 w-[150px] h-[44px] hover:cursor-pointer"
+      className="flex items-center gap-4 w-[150px] h-[44px] hover:cursor-pointer group"
     >
       {buttonContent}
     </button>
