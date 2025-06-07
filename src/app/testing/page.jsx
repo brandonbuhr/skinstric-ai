@@ -157,7 +157,7 @@ export default function Testing() {
       </div>
 
       {currentStep === "complete" && (
-        <div className="absolute right-[32px] bottom-[32px]">
+        <div className="absolute right-[4px] bottom-[32px]">
           <ButtonWithIcon
             text="PROCEED"
             direction="right"

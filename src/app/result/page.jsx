@@ -37,30 +37,79 @@ export default function Result() {
       <Navbar />
       <p className="ml-8 font-bold">TO START ANALYSIS</p>
 
-      <div className="flex items-center justify-center h-[calc(100vh-72px)] gap-32">
+      <div className="flex items-center justify-center h-[calc(100vh-100px)] gap-80 xl:gap-140 lg:gap-100 flex-col xl:flex-row lg:flex-row md:flex-row sm:flex-col">
         <button
           onClick={handleFaceScan}
-          className="flex flex-col items-center gap-4"
+          className="relative flex flex-col items-center gap-4"
         >
-          <Image src="/camera.png" alt="Camera icon" width={136} height={136} />
-          <p className="text-xs text-center max-w-[150px] uppercase">
-            Allow A.I. to scan your face
-          </p>
+          <div className="relative">
+            <Image
+              src="/camera.png"
+              alt="Camera icon"
+              width={136}
+              height={136}
+              className="hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+            />
+
+            <div className="absolute -top-5 -right-[60px] w-[66px] h-[59px]">
+              <svg
+                className="absolute top-1 left-0"
+                width="62"
+                height="55"
+                viewBox="0 0 62 55"
+              >
+                <path
+                  d="M 0 55 L 62 0"
+                  stroke="#1A1B1C"
+                  strokeWidth="1"
+                  fill="none"
+                />
+              </svg>
+              <div className="absolute top-0 right-0 w-[5px] h-[5px] border border-[#1A1B1C] rounded-full bg-white"></div>
+            </div>
+
+            <p className="absolute -top-14 -right-[130px] text-xs text-center uppercase whitespace-nowrap">
+              <span className="block">Allow A.I.</span>
+              <span className="block">to scan your face</span>
+            </p>
+          </div>
         </button>
 
         <button
           onClick={handleGalleryAccess}
-          className="flex flex-col items-center gap-4"
+          className="relative flex flex-col items-center gap-4"
         >
-          <Image
-            src="/gallery.png"
-            alt="Gallery icon"
-            width={136}
-            height={136}
-          />
-          <p className="text-xs text-center max-w-[150px] uppercase">
-            Allow A.I. access gallery
-          </p>
+          <div className="relative">
+            <Image
+              src="/gallery.png"
+              alt="Gallery icon"
+              width={136}
+              height={136}
+              className="hover:cursor-pointer hover:scale-105 transition-transform duration-300"
+            />
+
+            <div className="absolute -bottom-5 -left-[70px] w-[66px] h-[59px]">
+              <svg
+                className="absolute bottom-1 right-0"
+                width="62"
+                height="55"
+                viewBox="0 0 62 55"
+              >
+                <path
+                  d="M 62 0 L 0 55"
+                  stroke="#1A1B1C"
+                  strokeWidth="1"
+                  fill="none"
+                />
+              </svg>
+              <div className="absolute bottom-0 left-0 w-[5px] h-[5px] border border-[#1A1B1C] rounded-full bg-white"></div>
+            </div>
+
+            <p className="absolute -bottom-12 -left-[150px] text-xs text-center uppercase whitespace-nowrap">
+              <span className="block">Allow A.I.</span>
+              <span className="block">access gallery</span>
+            </p>
+          </div>
         </button>
       </div>
 

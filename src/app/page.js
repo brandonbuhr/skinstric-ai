@@ -69,7 +69,7 @@ export default function Home() {
           <div className="absolute inset-0 border-2 border-[#A0A4AB] border-dashed rotate-45"></div>
 
           <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-            <h1 className="text-[40px] sm:text-[50px] leading-tight mb-6">
+            <h1 className="text-[30px] sm:text-[40px] leading-tight mb-6">
               Sophisticated
               <br />
               skincare
