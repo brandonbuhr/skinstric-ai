@@ -97,8 +97,8 @@ export default function Testing() {
   };
 
   const getPlaceholder = () => {
-    if (currentStep === "name") return "Enter your name";
-    if (currentStep === "location") return "Enter your location";
+    if (currentStep === "name") return "Introduce Yourself";
+    if (currentStep === "location") return "your city name";
     return "";
   };
 
@@ -116,9 +116,7 @@ export default function Testing() {
           {currentStep !== "complete" ? (
             <>
               <p className="text-sm text-gray-600 relative z-10">
-                {currentStep === "name"
-                  ? "What's your name?"
-                  : "Where are you located?"}
+                CLICK TO TYPE
               </p>
               <input
                 type="text"

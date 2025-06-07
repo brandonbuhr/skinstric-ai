@@ -37,12 +37,13 @@ export default function Result() {
       <Navbar />
       <p className="ml-8 font-bold">TO START ANALYSIS</p>
 
-      <div className="flex items-center justify-center h-[calc(100vh-100px)] gap-80 xl:gap-140 lg:gap-100 flex-col xl:flex-row lg:flex-row md:flex-row sm:flex-col">
+      <div className="flex items-center justify-center h-[calc(100vh-100px)] gap-40 xl:gap-140 lg:gap-100 md:gap-80 flex-col xl:flex-row lg:flex-row md:flex-row sm:flex-col">
         <button
           onClick={handleFaceScan}
           className="relative flex flex-col items-center gap-4"
         >
           <div className="relative">
+            <div className="absolute w-[300px] h-[300px] left-1/2 top-[70px] -translate-x-1/2 -translate-y-1/2 border-dashed border-2 rotate-45 border-[#A0A4AB] hidden xl:block lg:block md:block"></div>
             <Image
               src="/camera.png"
               alt="Camera icon"
@@ -51,7 +52,7 @@ export default function Result() {
               className="hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />
 
-            <div className="absolute -top-5 -right-[60px] w-[66px] h-[59px]">
+            <div className="absolute -top-5 -right-[60px] w-[66px] h-[59px] hidden xl:block lg:block md:block sm:hidden">
               <svg
                 className="absolute top-1 left-0"
                 width="62"
@@ -68,10 +69,10 @@ export default function Result() {
               <div className="absolute top-0 right-0 w-[5px] h-[5px] border border-[#1A1B1C] rounded-full bg-white"></div>
             </div>
 
-            <p className="absolute -top-14 -right-[130px] text-xs text-center uppercase whitespace-nowrap">
-              <span className="block">Allow A.I.</span>
-              <span className="block">to scan your face</span>
-            </p>
+            <div className="xl:absolute lg:absolute md:absolute xl:-top-18 xl:-right-[130px] lg:-top-18 lg:-right-[130px] md:-top-18 md:-right-[130px] text-xs uppercase text-left space-y-2">
+              <p className="mt-4 xl:mt-0 lg:mt-0 md:mt-0">Allow A.I.</p>
+              <p>to scan your face</p>
+            </div>
           </div>
         </button>
 
@@ -80,6 +81,7 @@ export default function Result() {
           className="relative flex flex-col items-center gap-4"
         >
           <div className="relative">
+            <div className="absolute w-[300px] h-[300px] left-1/2 top-[70px] -translate-x-1/2 -translate-y-1/2 border-dashed border-2 rotate-45 border-[#A0A4AB] hidden xl:block lg:block md:block"></div>
             <Image
               src="/gallery.png"
               alt="Gallery icon"
@@ -88,7 +90,7 @@ export default function Result() {
               className="hover:cursor-pointer hover:scale-105 transition-transform duration-300"
             />
 
-            <div className="absolute -bottom-5 -left-[70px] w-[66px] h-[59px]">
+            <div className="absolute -bottom-5 -left-[70px] w-[66px] h-[59px] hidden xl:block lg:block md:block sm:hidden">
               <svg
                 className="absolute bottom-1 right-0"
                 width="62"
@@ -105,10 +107,10 @@ export default function Result() {
               <div className="absolute bottom-0 left-0 w-[5px] h-[5px] border border-[#1A1B1C] rounded-full bg-white"></div>
             </div>
 
-            <p className="absolute -bottom-12 -left-[150px] text-xs text-center uppercase whitespace-nowrap">
-              <span className="block">Allow A.I.</span>
-              <span className="block">access gallery</span>
-            </p>
+            <div className="xl:absolute lg:absolute md:absolute xl:-bottom-18 xl:-left-[150px] lg:-bottom-18 lg:-left-[150px] md:-bottom-18 md:-left-[150px] text-xs uppercase text-right space-y-2">
+              <p className="mt-4 xl:mt-0 lg:mt-0 md:mt-0">Allow A.I.</p>
+              <p>access gallery</p>
+            </div>
           </div>
         </button>
       </div>
