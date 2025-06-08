@@ -35,8 +35,8 @@ export default function Home() {
               : ""
           }`}
         >
-          <h1 className="text-[60px] text-center">Sophisticated</h1>
-          <h1 className="text-[60px] text-center">skincare</h1>
+          <h1 className="text-[80px] text-center">Sophisticated</h1>
+          <h1 className="text-[80px] text-center">skincare</h1>
         </div>
 
         <div

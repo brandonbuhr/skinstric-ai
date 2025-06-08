@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/Navbar";
 import ButtonWithIcon from "../components/ButtonWithIcon";
+import { IoCameraOutline } from "react-icons/io5";
 
 export default function Capture() {
   const router = useRouter();
@@ -91,34 +92,62 @@ export default function Capture() {
 
         <canvas ref={canvasRef} className="hidden" />
 
-        <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+        <div className="absolute bottom-32 left-0 right-0 flex flex-col items-center text-white">
           {!capturedImage ? (
+            <>
+              <p className="text-xs">TO GET BETTER RESULTS MAKE SURE TO HAVE</p>
+
+              <p className="flex items-center gap-4 text-xs mt-4">
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 border border-white rotate-45 flex-shrink-0"></span>
+                  NEUTRAL EXPRESSION
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 border border-white rotate-45 flex-shrink-0"></span>
+                  FRONTAL POSE
+                </span>
+                <span className="flex items-center gap-2">
+                  <span className="w-2 h-2 border border-white rotate-45 flex-shrink-0"></span>
+                  ADEQUATE LIGHTING
+                </span>
+              </p>
+            </>
+          ) : (
+            <p className="text-white font-bold">PREVIEW</p>
+          )}
+        </div>
+
+        {!capturedImage ? (
+          <div className="absolute bottom-1/2 right-8 flex items-center gap-2">
+            <p className="text-white font-bold">TAKE PICTURE</p>
             <button
               onClick={capturePhoto}
-              className="bg-white rounded-full w-20 h-20 border-4 border-gray-300 hover:border-gray-400 transition-colors"
+              className="bg-white rounded-full w-16 h-16 outline-4 outline-white outline-offset-2 hover:scale-105 transition-transform duration-300 flex items-center justify-center hover:cursor-pointer"
               aria-label="Capture photo"
             >
-              <div className="w-16 h-16 bg-white rounded-full mx-auto" />
+              <IoCameraOutline className="w-8 h-8 text-gray-700" />
             </button>
-          ) : (
+          </div>
+        ) : (
+          <div className="absolute bottom-8 left-0 right-0 flex justify-center">
             <div className="flex gap-4">
               <button
                 onClick={retakePhoto}
-                className="bg-white text-black px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+                className="bg-white text-black px-6 py-3 font-medium hover:cursor-pointer hover:bg-gray-300 transition-colors"
               >
                 RETAKE
               </button>
               <button
                 onClick={usePhoto}
-                className="bg-black text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+                className="bg-black text-white px-6 py-3 font-medium hover:cursor-pointer hover:bg-gray-800 transition-colors"
               >
-                USE PHOTO
+                USE THIS PHOTO
               </button>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
-        <div className="absolute left-[32px] bottom-[48px]">
+        <div className="absolute left-[32px] bottom-[48px] invert brightness-200">
           <ButtonWithIcon text="BACK" direction="left" href="/result" />
         </div>
       </div>

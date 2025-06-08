@@ -9,6 +9,11 @@ export default function Summary() {
   const [results, setResults] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("race");
   const [loading, setLoading] = useState(true);
+  const [userSelections, setUserSelections] = useState({
+    race: null,
+    age: null,
+    gender: null,
+  });
 
   useEffect(() => {
     const analysisResults = sessionStorage.getItem("analysisResults");
@@ -52,7 +57,8 @@ export default function Summary() {
   const getDisplayName = (category, key) => {
     const displayNames = {
       race: {
-        black: "white",
+        black: "Black",
+        white: "White",
         "southeast asian": "Southeast asian",
         "south asian": "South asian",
         "latino hispanic": "Latino hispanic",
@@ -78,36 +84,58 @@ export default function Summary() {
     return displayNames[category]?.[key] || key;
   };
 
+  const handleItemClick = (category, key) => {
+    setUserSelections((prev) => ({
+      ...prev,
+      [category]: key,
+    }));
+  };
+
+  const getSelectedValue = (category) => {
+    if (userSelections[category]) {
+      return {
+        label: userSelections[category],
+        value: results[category][userSelections[category]],
+      };
+    }
+    return getHighestConfidence(category);
+  };
+
   const getCurrentData = () => {
+    const selectedValue = getSelectedValue(selectedCategory);
+
     switch (selectedCategory) {
       case "race":
         return {
-          title: "White",
-          percentage: Math.round(raceHighest.value * 100),
+          title: getDisplayName("race", selectedValue.label),
+          percentage: Math.round(parseFloat(selectedValue.value) * 100),
           items: Object.entries(results.race || {}).map(([key, value]) => ({
+            key,
             label: getDisplayName("race", key),
             value: Math.round(parseFloat(value) * 100),
-            isHighest: key === raceHighest.label,
+            isHighest: key === (userSelections.race || raceHighest.label),
           })),
         };
       case "age":
         return {
-          title: getDisplayName("age", ageHighest.label),
-          percentage: Math.round(ageHighest.value * 100),
+          title: getDisplayName("age", selectedValue.label),
+          percentage: Math.round(parseFloat(selectedValue.value) * 100),
           items: Object.entries(results.age || {}).map(([key, value]) => ({
+            key,
             label: getDisplayName("age", key),
             value: Math.round(parseFloat(value) * 100),
-            isHighest: key === ageHighest.label,
+            isHighest: key === (userSelections.age || ageHighest.label),
           })),
         };
       case "gender":
         return {
-          title: getDisplayName("gender", genderHighest.label),
-          percentage: Math.round(genderHighest.value * 100),
+          title: getDisplayName("gender", selectedValue.label),
+          percentage: Math.round(parseFloat(selectedValue.value) * 100),
           items: Object.entries(results.gender || {}).map(([key, value]) => ({
+            key,
             label: getDisplayName("gender", key),
             value: Math.round(parseFloat(value) * 100),
-            isHighest: key === genderHighest.label,
+            isHighest: key === (userSelections.gender || genderHighest.label),
           })),
         };
       default:
@@ -120,127 +148,162 @@ export default function Summary() {
   return (
     <>
       <Navbar />
-      <div className="flex h-[calc(100vh-72px)]">
-        <div className="w-80 bg-gray-100 p-4">
-          <div className="mb-6">
-            <h2 className="text-xs font-bold mb-2">A.I. ANALYSIS</h2>
-            <h1 className="text-3xl font-bold">DEMOGRAPHICS</h1>
-            <p className="text-xs text-gray-600 mt-2">PREDICTED RACE & AGE</p>
-          </div>
-
-          <div className="space-y-4">
-            <button
-              onClick={() => setSelectedCategory("race")}
-              className={`w-full text-left p-3 ${
-                selectedCategory === "race" ? "bg-black text-white" : "bg-white"
-              }`}
-            >
-              <div className="text-xs font-medium">
-                {getDisplayName("race", raceHighest.label)}
-              </div>
-              <div className="text-xs mt-1 font-bold">RACE</div>
-            </button>
-
-            <button
-              onClick={() => setSelectedCategory("age")}
-              className={`w-full text-left p-3 ${
-                selectedCategory === "age" ? "bg-black text-white" : "bg-white"
-              }`}
-            >
-              <div className="text-xs font-medium">
-                {getDisplayName("age", ageHighest.label)}
-              </div>
-              <div className="text-xs mt-1 font-bold">AGE</div>
-            </button>
-
-            <button
-              onClick={() => setSelectedCategory("gender")}
-              className={`w-full text-left p-3 ${
-                selectedCategory === "gender"
-                  ? "bg-black text-white"
-                  : "bg-white"
-              }`}
-            >
-              <div className="text-xs font-medium">
-                {getDisplayName("gender", genderHighest.label)}
-              </div>
-              <div className="text-xs mt-1 font-bold">SEX</div>
-            </button>
-          </div>
+      <div className="h-[calc(100vh-100px)]">
+        <div className="p-8 bg-gray-50">
+          <h2 className="font-bold mb-3">A.I. ANALYSIS</h2>
+          <h1 className="text-7xl font-bold">DEMOGRAPHICS</h1>
+          <p className="text-sm mt-3">PREDICTED RACE & AGE</p>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center bg-gray-50">
-          <h2 className="text-5xl font-light mb-8">{currentData?.title}</h2>
-
-          <div className="relative w-64 h-64">
-            <svg className="transform -rotate-90 w-64 h-64">
-              <circle
-                cx="128"
-                cy="128"
-                r="120"
-                stroke="#e5e5e5"
-                strokeWidth="16"
-                fill="none"
-              />
-              <circle
-                cx="128"
-                cy="128"
-                r="120"
-                stroke="#000"
-                strokeWidth="16"
-                fill="none"
-                strokeDasharray={`${
-                  (2 * Math.PI * 120 * currentData?.percentage) / 100
-                } ${2 * Math.PI * 120}`}
-                className="transition-all duration-500"
-              />
-            </svg>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-6xl font-light">
-                {currentData?.percentage}%
-              </span>
+        <div className="flex md:flex-row flex-col h-[calc(100%-180px)]">
+          <div className="w-full md:w-96 bg-gray-50">
+            <div className="mx-2"></div>
+            <div className="pr-4 pl-4 md:max-w-none max-w-md mx-auto">
+              <div className="border-t border-black"></div>
+              <div>
+                <button
+                  onClick={() => setSelectedCategory("race")}
+                  className={`w-full text-left px-4 py-4 hover:cursor-pointer ${
+                    selectedCategory === "race"
+                      ? "bg-black text-white"
+                      : "bg-white"
+                  }`}
+                >
+                  <div className="text-base">
+                    {getDisplayName("race", getSelectedValue("race").label)}
+                  </div>
+                  <div className="text-xs mt-1 font-bold">RACE</div>
+                </button>
+                <div className="border-t border-black"></div>
+                <button
+                  onClick={() => setSelectedCategory("age")}
+                  className={`w-full text-left px-4 py-4 mt-2 hover:cursor-pointer ${
+                    selectedCategory === "age"
+                      ? "bg-black text-white"
+                      : "bg-white"
+                  }`}
+                >
+                  <div className="text-base">
+                    {getDisplayName("age", getSelectedValue("age").label)}
+                  </div>
+                  <div className="text-xs mt-1 font-bold">AGE</div>
+                </button>
+                <div className="border-t border-black"></div>
+                <button
+                  onClick={() => setSelectedCategory("gender")}
+                  className={`w-full text-left px-4 py-4 mt-2 hover:cursor-pointer ${
+                    selectedCategory === "gender"
+                      ? "bg-black text-white"
+                      : "bg-white"
+                  }`}
+                >
+                  <div className="text-base">
+                    {getDisplayName("gender", getSelectedValue("gender").label)}
+                  </div>
+                  <div className="text-xs mt-1 font-bold">SEX</div>
+                </button>
+              </div>
             </div>
           </div>
 
-          <p className="text-sm text-gray-500 mt-8">
-            If A.I. estimate is wrong, select the correct one.
-          </p>
-        </div>
+          <div className="flex-1 bg-white md:order-none order-last">
+            <div className="mx-2"></div>
+            <div className="border-t border-black"></div>
+            <div className="flex flex-col items-center justify-center h-full px-8 relative">
+              <h2 className="text-5xl mb-12 md:absolute md:top-8 md:left-8">
+                {currentData?.title}
+              </h2>
 
-        <div className="w-80 bg-white p-6">
-          <h3 className="text-sm font-bold mb-4">
-            {selectedCategory.toUpperCase()}
-            <span className="float-right">A.I. CONFIDENCE</span>
-          </h3>
+              <div className="relative md:w-80 md:h-80 w-64 h-64">
+                <svg className="transform -rotate-90 md:w-80 md:h-80 w-64 h-64">
+                  <circle
+                    cx={window.innerWidth >= 768 ? "160" : "128"}
+                    cy={window.innerWidth >= 768 ? "160" : "128"}
+                    r={window.innerWidth >= 768 ? "140" : "112"}
+                    stroke="#e5e5e5"
+                    strokeWidth="20"
+                    fill="none"
+                  />
 
-          <div className="space-y-3">
-            {currentData?.items
-              .sort((a, b) => b.value - a.value)
-              .map((item, index) => (
-                <div
-                  key={index}
-                  className={`flex items-center justify-between p-2 ${
-                    item.isHighest ? "bg-gray-100" : ""
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <div
-                      className={`w-2 h-2 rounded-full ${
-                        item.isHighest ? "bg-black" : "bg-gray-300"
-                      }`}
-                    />
-                    <span className="text-sm">{item.label}</span>
-                  </div>
-                  <span className="text-sm font-medium">{item.value}%</span>
+                  <circle
+                    cx={window.innerWidth >= 768 ? "160" : "128"}
+                    cy={window.innerWidth >= 768 ? "160" : "128"}
+                    r={window.innerWidth >= 768 ? "140" : "112"}
+                    stroke="#000"
+                    strokeWidth="20"
+                    fill="none"
+                    strokeDasharray={`${
+                      (2 *
+                        Math.PI *
+                        (window.innerWidth >= 768 ? 140 : 112) *
+                        currentData?.percentage) /
+                      100
+                    } ${2 * Math.PI * (window.innerWidth >= 768 ? 140 : 112)}`}
+                    strokeLinecap="round"
+                    className="transition-all duration-500"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="md:text-7xl text-5xl font-light">
+                    {currentData?.percentage}%
+                  </span>
                 </div>
-              ))}
+              </div>
+
+              <p className="text-sm text-gray-500 mt-12 text-center">
+                If A.I. estimate is wrong, select the correct one.
+              </p>
+            </div>
+          </div>
+
+          <div className="w-full md:w-96 bg-gray-50">
+            <div className="mx-2">
+              <div className="border-t border-black"></div>
+            </div>
+            <div className="p-8 pt-6 md:max-w-none max-w-md mx-auto">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-sm font-bold">
+                  {selectedCategory.toUpperCase()}
+                </h3>
+                <span className="text-sm font-bold">A.I. CONFIDENCE</span>
+              </div>
+
+              <div className="space-y-1">
+                {currentData?.items
+                  .sort((a, b) => b.value - a.value)
+                  .map((item, index) => (
+                    <button
+                      key={index}
+                      onClick={() =>
+                        handleItemClick(selectedCategory, item.key)
+                      }
+                      className={`w-full flex items-center justify-between px-3 py-3 hover:bg-gray-200 cursor-pointer ${
+                        item.isHighest
+                          ? "bg-black text-white hover:bg-gray-900"
+                          : ""
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div
+                          className={`w-2 h-2 rotate-45 ${
+                            item.isHighest
+                              ? "bg-white"
+                              : "border border-gray-400"
+                          }`}
+                        />
+                        <span className="text-sm">{item.label}</span>
+                      </div>
+                      <span className="text-sm">{item.value}%</span>
+                    </button>
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="fixed bottom-8 left-8 right-8 flex justify-between items-center">
         <ButtonWithIcon text="BACK" direction="left" href="/select" />
-
         <ButtonWithIcon text="HOME" direction="right" href="/" />
       </div>
     </>

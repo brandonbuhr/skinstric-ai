@@ -43,8 +43,8 @@ export default function Select() {
           >
             <button
               onClick={handleDemographicsClick}
-              className="absolute top-0 left-0 w-1/2 h-1/2 hover:bg-gray-300 
-            transition-colors cursor-pointer flex items-center justify-center"
+              className="absolute top-0 left-0 w-1/2 h-1/2 hover:scale-105 transition-transform hover:bg-gray-300 duration-300
+             cursor-pointer flex items-center justify-center"
             >
               <span className="text-sm font-medium transform -rotate-45">
                 DEMOGRAPHICS
@@ -56,9 +56,9 @@ export default function Select() {
             flex items-center justify-center hover:bg-gray-300 cursor-not-allowed"
             >
               <span className="text-center text-sm font-medium leading-tight transform -rotate-45">
-                COSMETIC
+                SKIN TYPE
                 <br />
-                CONCERNS
+                DETAILS
               </span>
             </div>
 
@@ -67,9 +67,9 @@ export default function Select() {
             flex items-center justify-center hover:bg-gray-300 cursor-not-allowed"
             >
               <span className="text-center text-sm font-medium leading-tight transform -rotate-45">
-                SKIN TYPE
+                COSMETIC
                 <br />
-                DETAILS
+                CONCERNS
               </span>
             </div>
 
