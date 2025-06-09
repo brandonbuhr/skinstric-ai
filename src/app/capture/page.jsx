@@ -122,7 +122,7 @@ export default function Capture() {
             <p className="text-white font-bold">TAKE PICTURE</p>
             <button
               onClick={capturePhoto}
-              className="bg-white rounded-full w-16 h-16 outline-4 outline-white outline-offset-2 hover:scale-105 transition-transform duration-300 flex items-center justify-center hover:cursor-pointer"
+              className="ml-4 bg-white rounded-full w-16 h-16 outline-2 outline-white outline-offset-4 hover:scale-105 transition-transform duration-300 flex items-center justify-center hover:cursor-pointer"
               aria-label="Capture photo"
             >
               <IoCameraOutline className="w-8 h-8 text-gray-700" />
