@@ -55,8 +55,8 @@ export default function Select() {
                   onClick={handleDemographicsClick}
                   onMouseEnter={() => setShowInnerBorder(true)}
                   onMouseLeave={() => setShowInnerBorder(false)}
-                  className="absolute top-0 left-0 w-1/2 h-1/2 hover:scale-105 transition-transform hover:bg-gray-300 duration-300
-                  cursor-pointer flex items-center justify-center"
+                  className="absolute top-0 left-0 w-[48%] h-[48%] hover:scale-105 transition-transform hover:bg-gray-400 duration-300
+                  cursor-pointer flex items-center justify-center bg-gray-300"
                 >
                   <span className="text-sm font-medium transform -rotate-45">
                     DEMOGRAPHICS
@@ -64,8 +64,8 @@ export default function Select() {
                 </button>
 
                 <div
-                  className="absolute top-0 right-0 w-1/2 h-1/2
-                  flex items-center justify-center hover:bg-gray-300 cursor-not-allowed"
+                  className="absolute top-0 right-0 w-[48%] h-[48%]
+                  flex items-center justify-center hover:bg-gray-400 cursor-not-allowed bg-gray-300"
                 >
                   <span className="text-center text-sm font-medium leading-tight transform -rotate-45">
                     SKIN TYPE
@@ -75,8 +75,8 @@ export default function Select() {
                 </div>
 
                 <div
-                  className="absolute bottom-0 left-0 w-1/2 h-1/2
-                flex items-center justify-center hover:bg-gray-300 cursor-not-allowed"
+                  className="absolute bottom-0 left-0 w-[48%] h-[48%]
+                flex items-center justify-center bg-gray-300 hover:bg-gray-400 cursor-not-allowed"
                 >
                   <span className="text-center text-sm font-medium leading-tight transform -rotate-45">
                     COSMETIC
@@ -88,8 +88,8 @@ export default function Select() {
                 <div
                   onMouseEnter={() => setShowOuterBorder(true)}
                   onMouseLeave={() => setShowOuterBorder(false)}
-                  className="absolute bottom-0 right-0 w-1/2 h-1/2
-                flex items-center justify-center hover:bg-gray-300 cursor-not-allowed"
+                  className="absolute bottom-0 right-0 w-[48%] h-[48%]
+                flex items-center justify-center hover:bg-gray-400 bg-gray-300 cursor-not-allowed"
                 >
                   <span className="text-sm font-medium transform -rotate-45">
                     WEATHER
