@@ -35,7 +35,7 @@ export default function Result() {
   return (
     <>
       <Navbar />
-      <p className="ml-8 font-bold">TO START ANALYSIS</p>
+      <p className="ml-8 font-bold">START ANALYSIS</p>
 
       <div className="flex items-center justify-center h-[calc(100vh-100px)] gap-40 xl:gap-170 lg:gap-100 md:gap-80 flex-col xl:flex-row lg:flex-row md:flex-row sm:flex-col">
         <button
@@ -82,7 +82,7 @@ export default function Result() {
           className="relative flex flex-col items-center gap-4"
         >
           <div className="relative">
-            <div className="absolute w-[300px] h-[300px] left-1/2 top-[70px] -translate-x-1/2 -translate-y-1/2 border-dashed border-2 rotate-45 border-[#A0A4AB] hidden xl:block lg:block md:block pointer-events-none"></div>
+            <div className="absolute w-[300px] h-[300px] left-1/2 top-[68px] -translate-x-1/2 -translate-y-1/2 border-dashed border-2 rotate-45 border-[#A0A4AB] hidden xl:block lg:block md:block pointer-events-none"></div>
             <Image
               src="/gallery.png"
               alt="Gallery icon"
