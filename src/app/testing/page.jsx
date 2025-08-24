@@ -125,7 +125,7 @@ export default function Testing() {
                 onChange={(e) => handleInputChange(e.target.value)}
                 onKeyDown={handleKeyDown}
                 disabled={isLoading}
-                className={`outline-none text-center text-4xl bg-transparent border-b-2 pb-2 w-full relative z-10 ${
+                className={`outline-none text-center text-2xl bg-transparent border-b-2 pb-4 w-full relative z-10 ${
                   error ? "border-red-500" : "border-gray-300"
                 } focus:border-black transition-colors`}
                 autoFocus
